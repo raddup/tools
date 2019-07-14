@@ -1,0 +1,51 @@
+#!/bin/bash
+
+clear
+
+echo "BACKUP ---- 1"
+echo
+echo  "RESTORE --- 2"
+echo
+echo
+echo
+
+
+
+read -p "NUMAR:" nr
+
+
+for value in '$nr';
+   do
+if [ $nr -eq 1 ]
+then
+echo
+echo "introdu usernameul pentru baza de date"
+read -p "USR:" usrmysql
+echo
+echo
+echo "introdu numele bazei de date "
+read -p "NBAZADATE:" namesql
+echo
+echo
+echo "alege unde vrei sa se salveze baza de date"
+read -p "pathptbazadedate:" pathsql
+echo
+echo
+echo "introdu pathul fisierelor wordpress:(exemplu /home/Documents/backup/backupwp.tar "
+read -p "pathfisierewp:" pathwp
+echo
+echo
+echo "introdu vrei sa se salveze backup-ul(exemplu /home/Documents/backup/backupsql.sql"
+read -p "pathfisieroutput:" pathowp
+
+
+sudo tar -cvf $pathowp $pathwp
+
+mysqldump -u $usrmysql -p $namesql > $pathsql
+
+
+
+       fi
+done
+
+
