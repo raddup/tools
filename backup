@@ -1,0 +1,72 @@
+#!/bin/bash
+
+  clear
+
+
+  echo -e "\e[96mSCRIPT PENTRU RESTAURARE/BACKUP:\e[0m"
+  echo 
+  echo
+  echo
+  echo -e "\e[31mBACKUP ---- 1\e[0m"
+  echo -e "\e[94mRESTORE ---- 2\e[0m"
+
+  read -p "NUMAR:" nr
+  path=$(pwd)
+        if [ $nr -eq 1 ]
+  then
+  clear
+  echo -e "\e[31mMOD BACKUP:\e[0m"
+  echo "introdu usernameul pentru baza de date"
+  read -p "USR:" usrmysql
+  echo
+  echo
+  echo "introdu numele bazei de date "
+  read -p "NBAZADATE:" namesql
+  echo
+  echo
+  echo "alege numele fisierului "
+  read -p "fisier.sql:" sql
+  mysqldump --single-transaction -u $usrmysql -p $namesql > $path/$sql
+  echo
+  echo 
+  echo "alege numele fisierului .tar"
+  read -p "fisier.tar:" tar
+  echo
+  echo 
+  echo "alege la ce director wp vrei sa faci backup ex(/var/www/html/wordpress ."
+  read -p "backuppoint:"  wpbackup
+  tar cvf $path/$tar -C $wpbackup
+       fi
+
+
+       if [ $nr -eq 2 ]
+  then
+  clear
+  echo
+  echo -e "\e[94mMOD RESTORE\e[0m"
+  echo
+  echo
+  echo "introdu usernameul pentru baza de date"
+  read -p "USR:" usrmysql
+  echo
+  echo
+  echo "introdu numele bazei de date "
+  read -p "NBAZADATE:" namesql
+  echo
+  echo
+  echo -e "alege numele fisierului .sql"
+  read -p "fisier.sql:" sql
+
+  mysql -u $usrmysql -p $namesql < $path/$sql
+  echo
+  echo
+  echo "alege numele fisierului.tar"
+  read -p "fisier.tar:" tar
+  echo
+  echo
+  echo "alege la ce director vrei sa rescrii din backup ex(/var/www/html/wordpress ."
+  read -p "backuppoint:"  wpbackup
+  tar xvf $path/$tar -C $wpbackup
+       fi
+
+
